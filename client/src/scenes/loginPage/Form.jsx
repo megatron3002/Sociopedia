@@ -48,7 +48,7 @@ const  Form = () => {
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const handleFormSubmit = async(values,onSubmitProps) = {};
+    const handleFormSubmit = async(values,onSubmitProps) => {};
 
     return (
         <Formik onSubmit={handleFormSubmit} initialValues={isLogin ? initialValuesLogin : initialValuesRegister} validationSchema = {isLogin ? loginSchema:registerSchema}>
@@ -99,6 +99,28 @@ const  Form = () => {
                                     helperText={touched.occupation && errors.occupation}
                                     sx={{ gridColumn: "span 4"}}
                                 />
+                                <Box gridColumn="span 6" border={`ipx solid ${palette.neutral.medium}`} borderRadius="5px" p="1rem">
+                                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false} onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}>
+                                        {({getRootProps, getInputProps}) => (
+                                            <Box
+                                                {...getRootProps()}
+                                                border={`2px dashed ${palette.primary.main}`}
+                                                p="1rem"
+                                                sx={{ "&:hover":{cursor:"pointer"}}}
+                                            >
+                                                <input {...getInputProps()} />
+                                                {!values.picture ? (
+                                                    <p>Add Picture Here</p>
+                                                ) : (
+                                                    <FlexBetween>
+                                                        <Typography>{values.picture.name}</Typography>
+                                                        <EditOutlinedIcon />
+                                                    </FlexBetween>
+                                                )}
+                                            </Box>
+                                        )}
+                                    </Dropzone>
+                                </Box>
                             </>
                         )}
                     </Box>
